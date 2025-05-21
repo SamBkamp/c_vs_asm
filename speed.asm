@@ -23,23 +23,25 @@ read_num_1 :
 	
 	add    ebx,ecx		;actual addition happens here
 	
-	sub    esp,0x1	
-	mov    byte [esp],0xa
-	push   0x1
-	mov    eax,ebx
+	sub    esp,0x1		;make space on stack
+	mov    byte [esp],0xa	;\n to end of buffer
+	push   0x1		;keep track of strlen (starting at 1 bc of \n above)
+	mov    eax,ebx		;eax reg 
 
 i_to_ascii :
-	mov    edx,0x0
-	mov    ecx,0xa
-	div    ecx
-	mov    ecx,edx
-	add    ecx,0x30
-	pop    ebx
+	mov    edx,0x0		;set upper bytes of divisor reg
+	mov    ecx,10		;divisor
+	div    ecx		;divide implied reg eax by ecx
+	mov    ecx,edx		;move remainder
+	add    ecx,0x30		;turn into ascii
+	
+	pop    ebx		;increment strlen counter
 	inc    ebx
-	sub    esp,0x1
-	mov    [esp],cl
-	push   ebx
-	test   eax,eax
+	sub    esp,0x1		;make space for new char on stack
+	mov    [esp],cl		;put new char on stack
+	push   ebx		;add counter back on stack
+	
+	test   eax,eax		;quotient (eax) of div is tested if 0 (less than 10)
 	je     print_res
 	jne    i_to_ascii
 
@@ -52,14 +54,14 @@ print_res:
 	jmp    exit
 
 tl_args:
-	mov    eax,0x4
+	mov    eax,0x4		;sys write
 	mov    ebx,0x1
-	mov    ecx,0x804a000
-	mov    edx,0x1d
+	mov    ecx, msg
+	mov    edx, len
 	int    0x80
 
 exit:
-	mov    eax,0x1
+	mov    eax,0x1		;sys exit
 	mov    ebx,0x0
 	int    0x80
 
