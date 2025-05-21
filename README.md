@@ -10,7 +10,7 @@ yes, very. Before even getting into runtime analysis, the assembler takes up sig
 - *c.out* (dynamically linked c binary) : 16008 bytes
 - *s.out* (statically linked c binary) : 762320 bytes
 
-compared to the dynamically linked c binary, the assembler binary is a whole *45%* smaller in disk, but that's not even a fair fight because the binary still makes calls to other compiled binaries that aren't counted here but still would be required to have on disk to run. Compared to the statically linked c binary its **98.8%** smaller. 2 whole orders of magnitude smaller than the statically linked c program.
+compared to the dynamically linked c binary, the assembler binary is a whole *45%* smaller in disk, but that's not even a fair fight because the c binary still makes calls to other compiled binaries that aren't counted here but still would be required to have on disk to run. Compared to the statically linked c binary its **98.8%** smaller. 2 whole orders of magnitude smaller than the statically linked c program.
 
 Now given this, I still don't know how Wozniak fit Wozmon in 254 bytes of data...
 
